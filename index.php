@@ -8,8 +8,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/alertifyjs/build/alertify.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs/build/css/alertify.min.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs/build/css/themes/default.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs/build/css/alertify.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs/build/css/themes/default.min.css" />
 </head>
 
 <body class="bg-success p-2 bg-opacity-25">
@@ -50,7 +50,7 @@
                     $xstmt->execute();
 
                     while ($xrs = $xstmt->fetch(PDO::FETCH_ASSOC)) {
-                        ?>
+                    ?>
                         <tr>
                             <td><?php echo htmlspecialchars($xrs["recid"]) ?></td>
                             <td><?php echo htmlspecialchars($xrs["fullname"]) ?></td>
@@ -63,7 +63,8 @@
                             <td><?php echo htmlspecialchars($xrs["salary"]) ?></td>
                             <td><?php echo $xrs["isactive"] ? 'Active' : 'Inactive' ?></td>
                             <td>
-                                <a href="edit_employee.php?recid=<?php echo $xrs['recid'] ?>" class="btn btn-info btn-sm">Edit</a>
+                                <button class="btn btn-info btn-sm" onclick="edit_click(<?php echo $xrs['recid'] ?>)">Edit</button>
+                                <!-- <a href="edit_employee.php?recid=<?php echo $xrs['recid'] ?>" class="btn btn-info btn-sm">Edit</a> -->
                                 <button class="btn btn-danger btn-sm" onclick="delete_click(<?php echo $xrs['recid'] ?>)">Delete</button>
                             </td>
                         </tr>
@@ -139,6 +140,7 @@
                             <input type="checkbox" class="form-check-input" name="txtfld[isactive]" id="chk_inactive">
                             <label class="form-check-label" for="chk_inactive">Active</label>
                         </div>
+
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -168,7 +170,7 @@
                 var civilStatus = $("#cbo_civilstat").val();
                 var contactNumber = $("#txt_contactnum").val();
                 var salary = $("#txt_salary").val();
-                var isActive = $("#chk_inactive").prop("checked") ? 1 : 0;
+                var isActive = $("#chk_inactive").prop("checked") ? 1 : 0; // Check if checkbox is checked
 
                 // AJAX request
                 $.ajax({
@@ -184,12 +186,12 @@
                         civilStatus: civilStatus,
                         contactNumber: contactNumber,
                         salary: salary,
-                        isactive: isActive
+                        isactive: isActive // Ensure this matches your PHP $_POST handling
                     },
                     success: function(response) {
                         // Handle success response
                         if (response.status == 'success') {
-                            alertify.alert(response.message, function(){
+                            alertify.alert(response.message, function() {
                                 location.reload();
                             });
                         } else {
@@ -207,6 +209,7 @@
                 // Close modal
                 $('#addEmployeeModal').modal('hide');
             });
+
 
             // Delete button click handler
             window.delete_click = function(xrecid) {
