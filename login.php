@@ -8,7 +8,7 @@ if (isset($_SESSION['name'])) {
 }
 
 if (isset($_POST['submit'])) {
-  include "dbConnection.php";  
+  include "db_config.php"; 
 
   // Sanitize user input to prevent SQL injection
   $username = mysqli_real_escape_string($conn, $_POST['username']);
