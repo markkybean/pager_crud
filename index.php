@@ -19,10 +19,18 @@
     include "navbar.php";
     ?>
 
+
     <div class="container mt-4">
-        <div class="d-flex justify-content-end">
-            <a href="#" class="btn btn-dark mb-4" id="btn_add">Add New</a>
-        </div>
+        <button class="btn btn-dark ms-2 mb-4 float-end" id="btn_add">Add New</button>
+        <form id="myfrom" name="myform" method='POST'>
+            <div class="d-flex justify-content-end">
+
+                <button type="button" class="btn btn-dark ms-2 mb-4" id="btn_print" onclick="print_click('pdf')">Print</button>
+                <button type="button" class="btn btn-dark ms-2 mb-4" id="btn_export" onclick="print_click('tab')">Export</button>
+                <input type="text" name="txt_repoutput" hidden>
+
+            </div>
+        </form>
 
         <div class="table-responsive">
             <table class="table table-striped table-bordered">
@@ -63,7 +71,7 @@
                             <td><?php echo htmlspecialchars($xrs["salary"]) ?></td>
                             <td><?php echo $xrs["isactive"] ? 'Active' : 'Inactive' ?></td>
                             <td>
-                                <button  class="btn btn-info btn-sm" onclick="edit_click(<?php echo $xrs['recid'] ?>)">Edit</button>
+                                <button class="btn btn-info btn-sm" onclick="edit_click(<?php echo $xrs['recid'] ?>)">Edit</button>
                                 <!-- <a href="edit_employee.php?recid=<?php echo $xrs['recid'] ?>" class="btn btn-info btn-sm">Edit</a> -->
                                 <button class="btn btn-danger btn-sm" onclick="delete_click(<?php echo $xrs['recid'] ?>)">Delete</button>
                             </td>
@@ -230,161 +238,169 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        // Add New button click handler to open add modal
-        $("#btn_add").click(function() {
-            $('#addEmployeeModal').modal('show');
-        });
-
-        // Save button click handler in add modal
-        $("#btn_save_modal").click(function() {
-            // Gather form data
-            var fullName = $("#txt_fullname").val();
-            var address = $("#txt_address").val();
-            var birthdate = $("#txt_birthdate").val();
-            var age = $("#txt_age").val();
-            var gender = $("input[name='txtfld[gender]']:checked").val();
-            var civilStatus = $("#cbo_civilstat").val();
-            var contactNumber = $("#txt_contactnum").val();
-            var salary = $("#txt_salary").val();
-            var isActive = $("#chk_inactive").prop("checked") ? 1 : 0;
-
-            // AJAX request to add employee
-            $.ajax({
-                url: "add_employee.php",
-                type: "POST",
-                dataType: "json",
-                data: {
-                    fullName: fullName,
-                    address: address,
-                    birthdate: birthdate,
-                    age: age,
-                    gender: gender,
-                    civilStatus: civilStatus,
-                    contactNumber: contactNumber,
-                    salary: salary,
-                    isactive: isActive
-                },
-                success: function(response) {
-                    if (response.status == 'success') {
-                        alertify.alert(response.message, function() {
-                            location.reload();
-                        });
-                    } else {
-                        alertify.alert(response.message);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
-                    alertify.alert("An error occurred while processing your request.");
-                }
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // Add New button click handler to open add modal
+            $("#btn_add").click(function() {
+                $('#addEmployeeModal').modal('show');
             });
 
-            $('#addEmployeeModal').modal('hide');
-        });
+            // Save button click handler in add modal
+            $("#btn_save_modal").click(function() {
+                // Gather form data
+                var fullName = $("#txt_fullname").val();
+                var address = $("#txt_address").val();
+                var birthdate = $("#txt_birthdate").val();
+                var age = $("#txt_age").val();
+                var gender = $("input[name='txtfld[gender]']:checked").val();
+                var civilStatus = $("#cbo_civilstat").val();
+                var contactNumber = $("#txt_contactnum").val();
+                var salary = $("#txt_salary").val();
+                var isActive = $("#chk_inactive").prop("checked") ? 1 : 0;
 
-        // Edit button click handler
-        window.edit_click = function(xrecid) {
-            $.ajax({
-                url: "get_employee.php",
-                type: "POST",
-                dataType: "json",
-                data: {
-                    recid: xrecid
-                },
-                success: function(response) {
-                    $("#edit_recid").val(response.recid);
-                    $("#edit_txt_fullname").val(response.fullname);
-                    $("#edit_txt_address").val(response.address);
-                    $("#edit_txt_birthdate").val(response.birthdate);
-                    $("#edit_txt_age").val(response.age);
-                    $("input[name='edit_txtfld[gender]'][value='" + response.gender + "']").prop("checked", true);
-                    $("#edit_cbo_civilstat").val(response.civilstat);
-                    $("#edit_txt_contactnum").val(response.contactnum);
-                    $("#edit_txt_salary").val(response.salary);
-                    $("#edit_chk_inactive").prop("checked", response.isactive == 1);
-
-                    $('#editEmployeeModal').modal('show');
-                },
-                error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
-                    alertify.alert("An error occurred while processing your request.");
-                }
-            });
-        };
-
-        // Update button click handler in edit modal
-        $("#btn_update_modal").click(function() {
-            var recid = $("#edit_recid").val();
-            var fullName = $("#edit_txt_fullname").val();
-            var address = $("#edit_txt_address").val();
-            var birthdate = $("#edit_txt_birthdate").val();
-            var age = $("#edit_txt_age").val();
-            var gender = $("input[name='edit_txtfld[gender]']:checked").val();
-            var civilStatus = $("#edit_cbo_civilstat").val();
-            var contactNumber = $("#edit_txt_contactnum").val();
-            var salary = $("#edit_txt_salary").val();
-            var isActive = $("#edit_chk_inactive").prop("checked") ? 1 : 0;
-
-            // AJAX request to update employee
-            $.ajax({
-                url: "edit_employee.php",
-                type: "POST",
-                dataType: "json",
-                data: {
-                    recid: recid,
-                    fullName: fullName,
-                    address: address,
-                    birthdate: birthdate,
-                    age: age,
-                    gender: gender,
-                    civilStatus: civilStatus,
-                    contactNumber: contactNumber,
-                    salary: salary,
-                    isactive: isActive
-                },
-                success: function(response) {
-                    if (response.status == 'success') {
-                        alertify.alert(response.message, function() {
-                            location.reload();
-                        });
-                    } else {
-                        alertify.alert(response.message);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
-                    alertify.alert("An error occurred while processing your request.");
-                }
-            });
-
-            $('#editEmployeeModal').modal('hide');
-        });
-
-        // Delete button click handler
-        window.delete_click = function(xrecid) {
-            alertify.confirm("Delete employee?", function() {
-                var xdata = "recid=" + xrecid + "&event_action=delete_emp";
+                // AJAX request to add employee
                 $.ajax({
-                    url: "delete_employee.php",
+                    url: "add_employee.php",
                     type: "POST",
                     dataType: "json",
-                    data: xdata,
-                    success: function(xres) {
-                        alertify.alert(xres["msg"], function() {
-                            location.reload();
-                        });
+                    data: {
+                        fullName: fullName,
+                        address: address,
+                        birthdate: birthdate,
+                        age: age,
+                        gender: gender,
+                        civilStatus: civilStatus,
+                        contactNumber: contactNumber,
+                        salary: salary,
+                        isactive: isActive
+                    },
+                    success: function(response) {
+                        if (response.status == 'success') {
+                            alertify.alert(response.message, function() {
+                                location.reload();
+                            });
+                        } else {
+                            alertify.alert(response.message);
+                        }
                     },
                     error: function(xhr, status, error) {
                         console.error(xhr.responseText);
                         alertify.alert("An error occurred while processing your request.");
                     }
                 });
+
+                $('#addEmployeeModal').modal('hide');
             });
-        };
-    });
-</script>
+
+            // Edit button click handler
+            window.edit_click = function(xrecid) {
+                $.ajax({
+                    url: "get_employee.php",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        recid: xrecid
+                    },
+                    success: function(response) {
+                        $("#edit_recid").val(response.recid);
+                        $("#edit_txt_fullname").val(response.fullname);
+                        $("#edit_txt_address").val(response.address);
+                        $("#edit_txt_birthdate").val(response.birthdate);
+                        $("#edit_txt_age").val(response.age);
+                        $("input[name='edit_txtfld[gender]'][value='" + response.gender + "']").prop("checked", true);
+                        $("#edit_cbo_civilstat").val(response.civilstat);
+                        $("#edit_txt_contactnum").val(response.contactnum);
+                        $("#edit_txt_salary").val(response.salary);
+                        $("#edit_chk_inactive").prop("checked", response.isactive == 1);
+
+                        $('#editEmployeeModal').modal('show');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                        alertify.alert("An error occurred while processing your request.");
+                    }
+                });
+            };
+
+            // Update button click handler in edit modal
+            $("#btn_update_modal").click(function() {
+                var recid = $("#edit_recid").val();
+                var fullName = $("#edit_txt_fullname").val();
+                var address = $("#edit_txt_address").val();
+                var birthdate = $("#edit_txt_birthdate").val();
+                var age = $("#edit_txt_age").val();
+                var gender = $("input[name='edit_txtfld[gender]']:checked").val();
+                var civilStatus = $("#edit_cbo_civilstat").val();
+                var contactNumber = $("#edit_txt_contactnum").val();
+                var salary = $("#edit_txt_salary").val();
+                var isActive = $("#edit_chk_inactive").prop("checked") ? 1 : 0;
+
+                // AJAX request to update employee
+                $.ajax({
+                    url: "edit_employee.php",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        recid: recid,
+                        fullName: fullName,
+                        address: address,
+                        birthdate: birthdate,
+                        age: age,
+                        gender: gender,
+                        civilStatus: civilStatus,
+                        contactNumber: contactNumber,
+                        salary: salary,
+                        isactive: isActive
+                    },
+                    success: function(response) {
+                        if (response.status == 'success') {
+                            alertify.alert(response.message, function() {
+                                location.reload();
+                            });
+                        } else {
+                            alertify.alert(response.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                        alertify.alert("An error occurred while processing your request.");
+                    }
+                });
+
+                $('#editEmployeeModal').modal('hide');
+            });
+
+            // Delete button click handler
+            window.delete_click = function(xrecid) {
+                alertify.confirm("Delete employee?", function() {
+                    var xdata = "recid=" + xrecid + "&event_action=delete_emp";
+                    $.ajax({
+                        url: "delete_employee.php",
+                        type: "POST",
+                        dataType: "json",
+                        data: xdata,
+                        success: function(xres) {
+                            alertify.alert(xres["msg"], function() {
+                                location.reload();
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                            alertify.alert("An error occurred while processing your request.");
+                        }
+                    });
+                });
+            };
+        });
+
+        function print_click(xtype) {
+            document.forms.myform.method = 'POST';
+            document.forms.myform.target = '_blank';
+            document.forms.myform.action = 'pdf_employeelist.php';
+            document.forms.myform.txt_repoutput.value = xtype;
+            document.forms.myform.submit();
+        }
+    </script>
 
 
 </body>
