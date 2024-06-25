@@ -17,7 +17,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $civilStatus = htmlspecialchars($_POST["civilStatus"]);
     $contactNumber = htmlspecialchars($_POST["contactNumber"]);
     $salary = floatval($_POST["salary"]);
-    $isActive = isset($_POST["isactive"]) ? 1 : 0;
+
+    $isActive = isset($_POST['edit_txtfld']['isactive']) ? 1 : 0;
+
 
     // Prepare data for update
     $params = array(

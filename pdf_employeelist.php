@@ -9,15 +9,15 @@ if (!file_exists($ezpdf_path)) {
     die('ezpdf class file not found.');
 }
 
-// Determine the export type
-$txt_repoutput = isset($_POST['txt_repoutput']) ? $_POST['txt_repoutput'] : '';
+// Check if the POST variable is set
+$txt_repoutput = isset($_POST['txt_repoutput']) ? $_POST['txt_repoutput'] : 'pdf';
 
 try {
-    // Initialize PDF object based on export type
-    if ($txt_repoutput == 'tab') {
-        $pdf = new tab_ezpdf('Letter', 'portrait');
-    } else {
+    // Initialize PDF object based on user input
+    if ($txt_repoutput == 'pdf') {
         $pdf = new Cezpdf('Letter', 'portrait');
+    } else {
+        $pdf = new tab_ezpdf('Letter', 'portrait');
     }
 
     // Select font
@@ -35,21 +35,17 @@ try {
     $xtop -= 30;
 
     // Draw top line
-    $x1 = 25;
-    $x2 = 587;
-    $pdf->line($x1, $xtop, $x2, $xtop);
+    $pdf->line(25, $xtop, 587, $xtop);
+
     $xtop -= 10;
 
-    // Define column positions
-    $xleft1 = [
-        25,        // Full Name
-        175,       // Address
-        325,       // Gender
-        385,       // Contact No.
-        575        // Salary
-    ];
+    $xleft1 = array();
+    $xleft1[0] = 25;
+    $xleft1[1] = $xleft1[0] + 150;
+    $xleft1[2] = $xleft1[1] + 150;
+    $xleft1[3] = $xleft1[2] + 60;
+    $xleft1[4] = $xleft1[3] + 190;
 
-    // Column headers
     $pdf->ezPlaceData($xleft1[0], $xtop, "Full Name", $xfsize, 'left');
     $pdf->ezPlaceData($xleft1[1], $xtop, "Address", $xfsize, 'left');
     $pdf->ezPlaceData($xleft1[2], $xtop, "Gender", $xfsize, 'left');
@@ -57,7 +53,6 @@ try {
     $pdf->ezPlaceData($xleft1[4], $xtop, "Salary", $xfsize, 'right');
 
     $xtop -= 5;
-
     // Draw second line
     $pdf->line(25, $xtop, 587, $xtop);
 
@@ -66,7 +61,7 @@ try {
     $pdf->closeObject();
     $pdf->addObject($xheader, 'all');
 
-    // Details from database
+    // Fetch employee data
     $xqry = "SELECT * FROM employeefile";
     $xstmt = $link_id->prepare($xqry);
     $xstmt->execute();
@@ -83,10 +78,7 @@ try {
 
     // Output PDF
     $pdf->ezStream();
-
 } catch (Exception $e) {
     // Handle any exceptions that occur during PDF generation
     echo 'Error generating PDF: ' . $e->getMessage();
 }
-
-?>
