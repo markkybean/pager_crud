@@ -1,0 +1,260 @@
+/*pager*/
+.pager {
+	width:100%;
+	
+}
+
+.pager_container1 {
+	width:100%;
+	margin-top:10px;
+}
+
+.pager_container1 .container1-left {
+	width:auto;
+	align:left;
+	padding: 0 0 5px 10px;
+	
+}
+
+.pager_container1 .container1-right {
+	width:auto;
+	text-align:right;
+	padding-right: 10px;
+}
+
+.pager_container2 {
+	width:100%;
+}
+
+.pager_container2 .container2-left {
+	width:25%;
+	align:left;
+}
+
+.pager_container2 .container2-center {
+	width:50%;
+	align:center;
+}
+
+.pager_container2 .container2-right {
+	width:25%;
+	align:right;
+}
+
+.pager .datatable {
+	text-align:center;
+	width:100%;
+}
+
+.pager .datatable tr:hover{
+	background-color:#E7EDF5;
+	cursor:pointer;
+}
+
+#datatable tr input[type=button]{
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.pager-active{
+	background-color: #E7EDF5;
+}
+
+.pager_btn{
+	width:80px;
+	text-align:center;
+	background-color:#8e8e8e;
+	border: 1px solid #8e8e8e;
+	font-size: 13px;
+	font-weight:600;
+	color: white;
+	padding: 5px;
+}
+/*
+#pager_selector{
+   background-color:#8e8e8e;
+}
+#pager_search{
+   background-color:#8e8e8e;'
+   border:2px solid silver;
+*/
+/*
+}
+*/
+.pager_btn:hover {
+	background-color:#333333;
+	color: #FFFFFF;
+	cursor: pointer;
+}
+
+.pager_navigator {
+/*	margin-left:2%;
+	margin-right:0%;*/
+	margin: 0 auto;
+	text-align: center
+}
+
+.pager_selector {
+	float:left;
+	margin-left:5%;
+}
+
+.pager_limiter {
+	float:right;
+	margin-right:5%;
+}
+
+.pager-modal {
+	width:50%;
+	height:50%;
+}
+
+.pager-module {
+	/*border: 1px solid #9BA0AF;*/
+	width: 100%;
+	margin: 20px auto;
+	/*margin: 0 1% 1% 1%;*/
+	/*-webkit-border-radius: 5px;*/
+	/*-moz-border-radius: 5px;*/
+	/*border-radius: 5px;*/
+	/*background: #ffffff;*/
+	/*box-shadow: 0 1px 3px #888, 0 0 2px #bbb;*/
+}
+
+.pager-module header h3 {
+	display: block;
+	width: 90%;
+	/*float: left;*/
+	text-align: center;
+	font-size: 16px;
+}
+
+.pager-module header {
+/*
+	border: 1px solid #9BA0AF;
+*/
+	height: 35px;
+	/*height: 45px;*/
+
+	width: 100%;
+	/*background: #F1F1F4 url(../images/secondary_bar.png) repeat-x;*/
+	/*-webkit-border-top-left-radius: 5px; -webkit-border-top-right-radius: 5px;*/
+	/*-moz-border-radius-topleft: 5px; -moz-border-radius-topright: 5px;*/
+	/*border-top-left-radius: 5px; border-top-right-radius: 5px;*/
+	/*background: #ccc;*/
+	/*box-shadow: 0 1px 2px #666;*/
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.pager-module footer {
+	height: 32px;
+	width: 100%;
+	border-top: 1px solid #9CA1B0;
+	background: #F1F1F4 url(../images/module_footer_bg.png) repeat-x;
+	-webkit-border-bottom-left-radius: 5px; -webkit-border-bottom-right-radius: 5px;
+	-moz-border-radius-bottomleft: 5px; -moz-border-radius-bottomright: 5px;
+	-webkit-border-bottom-left-radius: 5px; -webkit-border-bottom-right-radius: 5px;
+}
+
+.pager-module-content {
+	margin: 10px 20px;
+	color: #666;
+}
+
+.pager .search {
+
+background-color:#339933;
+font-weight: bold;
+height: 30px;
+border: 0;
+padding: 0 10px;
+color: white;
+cursor: pointer;
+font-family:arial;
+/*border-radius: .3em;*/
+width: auto;
+min-width: 70px;
+}
+
+.pager .search:hover {
+color: white;
+background-color:green;
+border: 0;
+}
+
+.pager .add {
+
+background-color:#339933;
+font-weight: bold;
+height: 30px;
+border: 0;
+padding: 0 10px;
+color: white;
+cursor: pointer;
+font-family:arial;
+/*border-radius: .3em;*/
+width: auto;
+min-width: 70px;
+}
+
+.pager .add:hover {
+color: white;
+background-color:green;
+border: 0;
+}
+
+.pager .edit {
+
+background-color:#339933;
+font-weight: bold;
+height: 30px;
+border: 0;
+padding: 0 10px;
+color: white;
+cursor: pointer;
+font-family:arial;
+/*border-radius: .3em;*/
+width: auto;
+min-width: 70px;
+}
+
+.pager .edit:hover {
+color: white;
+background-color:green;
+border: 0;
+}
+
+.pager .delete {
+/*border-radius: .3em;*/
+background-color:#aa4935;
+font-weight: bold;
+height: 30px;
+border: 0;
+padding: 0 10px;
+color: white;
+cursor: pointer;
+font-family:arial;
+width:70px;
+}
+
+.pager .delete:hover {
+color: white;
+background-color:#990000;
+border:0;
+}
+
+/* Pager Action Button fixed width*/
+
+._width {
+	width: 65px;
+}
+._widthM {
+	width: 80px;
+}
+
+._height {
+	height: 30px;
+}

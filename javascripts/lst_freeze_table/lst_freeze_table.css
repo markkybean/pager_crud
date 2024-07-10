@@ -1,0 +1,154 @@
+	.lst_freeze_table_container
+	{
+		overflow: hidden !important;
+	}
+
+	.lst_freeze_table_container * {
+		box-sizing: border-box;
+		overflow: unset !important;
+	}
+
+	/* --------------- fixed table -------------- */
+	.lst_freeze_table_container .flexthis {
+		display: inline-flex;
+		/*flex-wrap: wrap;*/
+	}
+
+	.lst_freeze_table_container .pagermain {
+		width: 500px;	/* --- user define --- */
+		height: 600px;	/* --- user define --- */
+
+		overflow: hidden !important;
+	}
+	.lst_freeze_table_container .table {
+		width: inherit; height: inherit;
+		overflow: auto !important;
+		position: relative;
+	}
+	.lst_freeze_table_container .thead {
+		position: sticky;
+		position: -webkit-sticky;
+		position: -moz-sticky;
+		top: 0;
+		z-index: 1;
+	}
+	.lst_freeze_table_container .table .th {
+		min-height: 40px;
+		/*font-size: 20px;*/
+		/*padding: 5px 10px;*/
+		padding: 5px;
+		background: #888;
+		color: #fff;
+
+		display: flex;
+		/*justify-content: center;*/
+		align-items: center;
+		font-weight: 800;
+	}
+	.lst_freeze_table_container .table .th:not(:last-child),
+	.lst_freeze_table_container .table .td:not(:last-child) {
+		border-right: 1px solid #ddd;
+	}
+	.lst_freeze_table_container .table .th,
+	.lst_freeze_table_container .table .td {
+		
+	}
+	.lst_freeze_table_container .table .td {
+		min-height: 40px;
+		/*font-size: 20px;*/
+		/*padding: 5px 10px;*/
+		padding: 5px;
+
+		/* display: flex; */
+		align-items: center;
+	}
+
+	/*.odd,
+	.odd .td {
+		background-color: #fff;
+	}
+	.even,
+	.even .td {
+		background-color: #dedede;
+	}*/
+
+	.lst_freeze_table_container .tr:nth-child(odd) .td
+	{
+		background-color: #fff;
+	}
+
+	.lst_freeze_table_container .tr:nth-child(even) .td
+	{
+		background-color: #dedede;
+	}
+
+	.lst_freeze_table_container .tr.hoverable:hover,
+	.lst_freeze_table_container .tr.hoverable:hover .td {
+		background-color: #aaa;
+		color: #fff;
+	}
+
+	.lst_freeze_table_container .fixedcol {
+		position: sticky;
+		position: -webkit-sticky;
+		position: -moz-sticky;
+		left: 0;
+
+		/*background: #ff0000 !important;*/
+	}
+
+	.lst_freeze_table_container .fixedcol .odd,
+	.lst_freeze_table_container .fixedcol .odd .td {
+		background-color: blue;
+	}
+
+	.lst_freeze_table_container .fixedcol .even,
+	.lst_freeze_table_container .fixedcol .even .td {
+		background-color: blue;
+	}
+	
+	.lst_freeze_table_container .fixedcol .tr.hoverable:hover,
+	.lst_freeze_table_container .fixedcol .tr.hoverable:hover .td {
+		background-color: blue;
+		color: #fff;
+	}
+
+
+	/* ---------------- start shadow effetct ------------------ */
+	.lst_freeze_table_container .fixedcol.fixedcol_left::after {
+		content: '';
+		width: 10px;
+		height: 100%;
+		background: linear-gradient(-90deg, transparent, rgba(0,0,0,0.3));
+		position: absolute;
+		top: 0; right: -10px;
+	}
+
+	.lst_freeze_table_container .fixedcol.fixedcol_right::before {
+		content: '';
+		width: 10px; 
+		height: 100%;
+		background: linear-gradient(90deg, transparent, rgba(0,0,0,0.3));
+		position: absolute;
+		top: 0; left: -10px;
+	}
+
+	/* ---------------- end shadow effetct ------------------ */
+
+	/* ---------------- other ------------------ */
+
+	/* custom css for pager freeze table : start */
+	#div_pager .fixedcol_right{
+		justify-content: center;
+	}
+	#div_pager .fixedcol_right input{
+		margin: 2px;
+	}
+	#div_pager div[type=number]{
+		text-align: right;
+	}
+
+	#div_pager div[type=text]{
+		text-align:left;
+	}
+	/* custom css for pager freeze table : end */

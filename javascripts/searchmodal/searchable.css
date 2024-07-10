@@ -1,0 +1,179 @@
+	.searchable_container
+	{
+	    height: auto;
+	    position: relative;
+	    display: inline-block;
+	    /* display: flex; */
+	    width: 100%;
+	    text-align: center;
+	    display: inline-flex;
+	    justify-content: space-between;
+	    align-items: center;
+	}
+
+	.searchable_container .searchable_text
+	{
+		/* display: inline-block; */
+		border-radius: .3em 0 0 .3em;
+		border: 1px solid silver;
+		/* border-right: 1px solid transparent; */
+		/* font-size: 15px; */
+		padding-right: 25px;
+		margin-right: 0px;
+		box-sizing: border-box;
+		/* margin: 0 auto; */
+		/* position: absolute; */
+		/* left: 0px; */
+		width: calc(100% - 30px);
+	}
+
+
+	.searchable_container .searchable_calldialog.other-search
+	{
+		/* height: 100%; */
+		/* display: inline-block; */
+		/* position: absolute; */
+		/* border-top-right-radius: .3em; */
+		/* border-bottom-right-radius: .3em; */
+		cursor: pointer;
+		z-index: 1;
+		height: 100%;
+		/* box-sizing: border-box; */
+		/* right: 0; */
+		width: 30px;
+		height: 30px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background: rgba(0,0,0,0.2);
+		border: 1px solid #aaa;
+		border-left: 1px solid transparent;
+		align-self: stretch;
+		border-radius: 0 .3em .3em 0;
+	}
+
+	.searchable_container .searchable_clear_btn
+	{
+		/*display: table;
+		height: 100%;*/
+		border-top-right-radius: .3em;
+		border-bottom-right-radius: .3em;
+		cursor: pointer;
+		visibility: hidden;
+		/* margin-left: -46px; */
+		color: #00207b;
+		font-size: 15px !important;
+		position: absolute;
+		right: 37px;
+	}
+
+	.searchable_container .searchable_clear_btn:hover
+	{
+		color: #0042ff;
+	}
+
+	.searchable_container .fa.fa-search
+	{
+		color:rgb(98, 125, 77);
+	}
+
+	.searchable_filterercontainer
+	{
+		height: 40px;
+		width: 100%;
+		display: inline-block;
+	}
+
+
+	.searchable_modaltxtfilterer
+	{
+		width:56%;
+		margin-right:5px;
+		border-radius: .3em;
+		border:1px solid silver;
+		padding-left:5px;
+		height: 100%;
+		vertical-align: top;
+	}
+
+	.searchable_modalselfilterer
+	{
+		display:inline-block;
+		width:25%;
+		margin-right:5px;
+		border-radius: .3em;
+		border:1px solid silver;
+		height:100%;
+		vertical-align: top;
+	}
+
+	.searchable_modalbtnfilterer, .searchable_modalbtnfilterer_add
+	{
+		border-radius: .3em;
+		height:100%;
+		width: 8% !important;
+		vertical-align: top;
+		margin-right: 3px;
+		/*vertical-align:bottom;
+		height: 45px !important;
+		padding: 14px 10px 30px;*/
+		/*background:#627d4d;color:#fff;*/
+		border:none
+	}
+
+	.searchable_table_result
+	{
+		border:1px solid #a9a9a9;
+		border-collapse:collapse;
+		width: 100%;
+	}
+
+	.searchable_table_result th,.searchable_action_column
+	{
+		text-align: center;
+	}
+
+	.searchable_table_result th,.searchable_table_result td
+	{
+		border:1px solid #a9a9a9;
+		padding: 5px;
+	}
+
+	/*.searchable_dialog_cancel_btn
+	{
+	    background-color: #aa4935 !important;
+	    font-weight: bold !important;
+	    border: 0 !important;
+	    color: white !important;
+	    cursor: pointer !important;
+	    font-family: arial !important;
+	    min-width: 65px !important;
+	}
+
+	.searchable_dialog_cancel_btn:hover {
+		color: white !important;
+		background-color:#990000 !important;
+		border:0 !important;
+	}*/
+
+	.searchable_dialog
+	{
+		overflow: auto !important; 
+	}
+
+	.searchable_resultcontainer .hoverTable tr:nth-child(odd)
+	{
+		background: #ffffff;
+	}
+
+	.searchable_resultcontainer .hoverTable tr:nth-child(even)
+	{
+		background: #dfdfdf;
+	}
+
+
+	.ui-dialog
+	{
+		/* z-index: 2000 !important; */
+		z-index: 2000;
+	}

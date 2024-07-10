@@ -16,7 +16,7 @@
 
     <?php
     // Include navbar.php assuming it contains your navigation bar code
-    include "navbar.php";
+    include "header.php";
     ?>
 
 
