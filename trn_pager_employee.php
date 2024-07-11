@@ -300,7 +300,7 @@ $pager->freeze_action();
 <form name="myform" id="myform" action="pdf_employeelist.php" method="post" target="_blank">
     <input type="hidden" name="txt_repoutput" id="txt_repoutput" value="">
 </form>
-<!-- <?php require_once("./modals.php"); ?> -->
+<?php require_once("./modals.php"); ?>
 
 
 
