@@ -300,82 +300,82 @@ $pager->freeze_action();
 <form name="myform" id="myform" action="pdf_employeelist.php" method="post" target="_blank">
     <input type="hidden" name="txt_repoutput" id="txt_repoutput" value="">
 </form>
-<?php require_once("./modals.php"); ?>
+<!-- <?php require_once("./modals.php"); ?> -->
+
 
 
 <script>
-    $(document).ready(function() {
-        // Add New button click handler to open add modal
-        $("#add_btn").click(function() {
-            $('#addEmployeeModal').modal('show');
-        });
+        $(document).ready(function() {
+            // Add New button click handler to open add modal
+            $("#add_btn").click(function() {
+                $('#addEmployeeModal').modal('show');
+            });
 
-        // Save button click handler in add modal
-        $("#btn_save_modal").click(function() {
-            var formData = {
-                fullName: $("#txt_fullname").val(),
-                address: $("#txt_address").val(),
-                birthdate: $("#txt_birthdate").val(),
-                age: $("#txt_age").val(),
-                gender: $("input[name='txtfld[gender]']:checked").val(),
-                civilStatus: $("#cbo_civilstat").val(),
-                contactNumber: $("#txt_contactnum").val(),
-                salary: $("#txt_salary").val(),
-                isactive: $("#chk_inactive").prop("checked") ? 1 : 0
-            };
+            // Save button click handler in add modal
+            $("#btn_save_modal").click(function() {
+                var formData = {
+                    fullName: $("#txt_fullname").val(),
+                    address: $("#txt_address").val(),
+                    birthdate: $("#txt_birthdate").val(),
+                    age: $("#txt_age").val(),
+                    gender: $("input[name='txtfld[gender]']:checked").val(),
+                    civilStatus: $("#cbo_civilstat").val(),
+                    contactNumber: $("#txt_contactnum").val(),
+                    salary: $("#txt_salary").val(),
+                    isactive: $("#chk_inactive").prop("checked") ? 1 : 0
+                };
 
-            $.ajax({
-                url: "add_employee.php",
-                type: "POST",
-                dataType: "json",
-                data: formData,
-                success: function(response) {
-                    if (response.status == 'success') {
-                        alertify.alert(response.message, function() {
-                            location.reload();
-                        });
-                    } else {
-                        alertify.alert(response.message);
+                $.ajax({
+                    url: "add_employee.php",
+                    type: "POST",
+                    dataType: "json",
+                    data: formData,
+                    success: function(response) {
+                        if (response.status == 'success') {
+                            alertify.alert(response.message, function() {
+                                location.reload();
+                            });
+                        } else {
+                            alertify.alert(response.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                        alertify.alert("An error occurred while processing your request.");
                     }
-                },
-                error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
-                    alertify.alert("An error occurred while processing your request.");
-                }
+                });
+
+                $('#addEmployeeModal').modal('hide');
             });
 
-            $('#addEmployeeModal').modal('hide');
-        });
+            // Edit button click handler
+            window.pager_edit_click = function(recid) {
+                $.ajax({
+                    url: "get_employee.php",
+                    type: "POST",
+                    dataType: "json",
+                    data: { recid: recid },
+                    success: function(response) {
+                        $("#edit_recid").val(response.recid);
+                        $("#edit_txt_fullname").val(response.fullname);
+                        $("#edit_txt_address").val(response.address);
+                        $("#edit_txt_birthdate").val(response.birthdate);
+                        $("#edit_txt_age").val(response.age);
+                        $("input[name='edit_txtfld[gender]'][value='" + response.gender + "']").prop("checked", true);
+                        $("#edit_cbo_civilstat").val(response.civilstat);
+                        $("#edit_txt_contactnum").val(response.contactnum);
+                        $("#edit_txt_salary").val(response.salary);
+                        $("#edit_chk_inactive").prop("checked", response.isactive == 1);
 
-        // Edit button click handler
-        window.pager_edit_click = function(recid) {
-            $.ajax({
-                url: "get_employee.php",
-                type: "POST",
-                dataType: "json",
-                data: { recid: recid },
-                success: function(response) {
-                    $("#edit_recid").val(response.recid);
-                    $("#edit_txt_fullname").val(response.fullname);
-                    $("#edit_txt_address").val(response.address);
-                    $("#edit_txt_birthdate").val(response.birthdate);
-                    $("#edit_txt_age").val(response.age);
-                    $("input[name='edit_txtfld[gender]'][value='" + response.gender + "']").prop("checked", true);
-                    $("#edit_cbo_civilstat").val(response.civilstat);
-                    $("#edit_txt_contactnum").val(response.contactnum);
-                    $("#edit_txt_salary").val(response.salary);
-                    $("#edit_chk_inactive").prop("checked", response.isactive == 1);
-
-                    $('#editEmployeeModal').modal('show');
-                },
-                error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
-                    alertify.alert("An error occurred while processing your request.");
-                }
-            });
-        };
-
-        // View button click handler
+                        $('#editEmployeeModal').modal('show');
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                        alertify.alert("An error occurred while processing your request.");
+                    }
+                });
+            };
+             // View button click handler
         window.pager_view_click = function(recid) {
             $.ajax({
                 url: "get_employee.php",
@@ -402,74 +402,72 @@ $pager->freeze_action();
                 }
             });
         };
+            // Update button click handler in edit modal
+            $("#btn_update_modal").click(function() {
+                var formData = {
+                    recid: $("#edit_recid").val(),
+                    fullName: $("#edit_txt_fullname").val(),
+                    address: $("#edit_txt_address").val(),
+                    birthdate: $("#edit_txt_birthdate").val(),
+                    age: $("#edit_txt_age").val(),
+                    gender: $("input[name='edit_txtfld[gender]']:checked").val(),
+                    civilStatus: $("#edit_cbo_civilstat").val(),
+                    contactNumber: $("#edit_txt_contactnum").val(),
+                    salary: $("#edit_txt_salary").val(),
+                    isactive: $("#edit_chk_inactive").prop("checked") ? 1 : 0
+                };
 
-        // Update button click handler in edit modal
-        $("#btn_update_modal").click(function() {
-            var formData = {
-                recid: $("#edit_recid").val(),
-                fullName: $("#edit_txt_fullname").val(),
-                address: $("#edit_txt_address").val(),
-                birthdate: $("#edit_txt_birthdate").val(),
-                age: $("#edit_txt_age").val(),
-                gender: $("input[name='edit_txtfld[gender]']:checked").val(),
-                civilStatus: $("#edit_cbo_civilstat").val(),
-                contactNumber: $("#edit_txt_contactnum").val(),
-                salary: $("#edit_txt_salary").val(),
-                isactive: $("#edit_chk_inactive").prop("checked") ? 1 : 0
-            };
-
-            $.ajax({
-                url: "edit_employee.php",
-                type: "POST",
-                dataType: "json",
-                data: formData,
-                success: function(response) {
-                    if (response.status == 'success') {
-                        alertify.alert(response.message, function() {
-                            location.reload();
-                        });
-                    } else {
-                        alertify.alert(response.message);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error(xhr.responseText);
-                    alertify.alert("An error occurred while processing your request.");
-                }
-            });
-
-            $('#editEmployeeModal').modal('hide');
-        });
-
-        // Delete button click handler
-        window.pager_delete_click = function(recid) {
-            alertify.confirm("Delete employee?", function() {
                 $.ajax({
-                    url: "delete_employee.php",
+                    url: "edit_employee.php",
                     type: "POST",
                     dataType: "json",
-                    data: { recid: recid, event_action: 'delete_emp' },
+                    data: formData,
                     success: function(response) {
-                        alertify.alert(response.msg, function() {
-                            location.reload();
-                        });
+                        if (response.status == 'success') {
+                            alertify.alert(response.message, function() {
+                                location.reload();
+                            });
+                        } else {
+                            alertify.alert(response.message);
+                        }
                     },
                     error: function(xhr, status, error) {
                         console.error(xhr.responseText);
                         alertify.alert("An error occurred while processing your request.");
                     }
                 });
+
+                $('#editEmployeeModal').modal('hide');
             });
-        };
 
-        // Print button click handler
-        function pager_print_click() {
-            document.forms.myform.method = 'POST';
-            document.forms.myform.target = '_blank';
-            document.forms.myform.action = 'pdf_employeelist.php';
-            document.forms.myform.txt_repoutput.value = "pdf";
-            document.forms.myform.submit();
-        }
-
-    });
+            // Delete button click handler
+            window.pager_delete_click = function(recid) {
+                alertify.confirm("Delete employee?", function() {
+                    $.ajax({
+                        url: "delete_employee.php",
+                        type: "POST",
+                        dataType: "json",
+                        data: { recid: recid, event_action: 'delete_emp' },
+                        success: function(response) {
+                            alertify.alert(response.msg, function() {
+                                location.reload();
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            console.error(xhr.responseText);
+                            alertify.alert("An error occurred while processing your request.");
+                        }
+                    });
+                });
+            };
+        });
+        
+    function pager_print_click(){
+        document.forms.myform.method = 'POST';
+        document.forms.myform.target = '_blank';
+        document.forms.myform.action = 'pdf_employeelist.php';
+        document.forms.myform.txt_repoutput.value = "pdf";
+        document.forms.myform.submit();
+    }
+    
 </script>
