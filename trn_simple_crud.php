@@ -204,6 +204,3 @@
 			document.forms.myform.submit();
 		}
 </script>
-<?php
-	require_once("./footer.php");
-?>
